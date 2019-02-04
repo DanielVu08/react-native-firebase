@@ -439,7 +439,7 @@ public class RNFirebaseNotificationManager {
       if (schedule.containsKey("exact")
         && schedule.getBoolean("exact")
         && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent);
       } else {
         alarmManager.set(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent);
       }
