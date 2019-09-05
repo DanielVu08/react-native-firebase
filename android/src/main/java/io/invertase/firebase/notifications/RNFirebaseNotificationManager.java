@@ -645,10 +645,13 @@ class RNFirebaseNotificationManager {
 
       alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, fireDate, interval, pendingIntent);
     } else {
-      if (schedule.containsKey("exact")
-        && schedule.getBoolean("exact")
-        && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent);
+      if (schedule.containsKey("exact") && schedule.getBoolean("exact")) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+          alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+          alarmManager.setExact(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent);
+        }
+
       } else {
         alarmManager.set(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent);
       }
